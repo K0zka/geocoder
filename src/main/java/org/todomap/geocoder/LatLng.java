@@ -1,5 +1,8 @@
 package org.todomap.geocoder;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class LatLng {
 	double lat;
 	double lng;
