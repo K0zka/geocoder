@@ -80,7 +80,7 @@ public class GoogleGeocoder implements GeoCoder {
 			parser.parse(stream, hb);
 		} catch (Exception e) {
 			logger.error("Exception on resolving the locale", e);
-			
+			throw new GeoCodeException(e);
 		}
 
 		return addr;
