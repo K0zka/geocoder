@@ -5,6 +5,21 @@
   <name>A simple Geocoder Service Wrapper for Java</name>
   <version>0.0.1-SNAPSHOT</version>
   <description>Google and Yahoo Geocoder wrappers for Java</description>
+  <repositories>
+  	<repository>
+  		<id>todomap.org</id>
+  		<name>todomap.org maven repository</name>
+  		<url>http://www.todomap.org/maven</url>
+  		<releases>
+  			<updatePolicy>never</updatePolicy>
+  			<checksumPolicy>fail</checksumPolicy>
+  		</releases>
+  		<snapshots>
+  			<updatePolicy>daily</updatePolicy>
+  			<checksumPolicy>fail</checksumPolicy>
+  		</snapshots>
+  	</repository>
+  </repositories>
   <dependencies>
   	<dependency>
   		<groupId>junit</groupId>
@@ -31,6 +46,11 @@
   		<url>http://iwillworkforfood.blogspot.com/</url>
   	</developer>
   </developers>
+  <scm>
+  	<connection>http://todomap.googlecode.com/svn/geocoder/trunk/</connection>
+  	<developerConnection>https://todomap.googlecode.com/svn/geocoder/trunk/</developerConnection>
+  	<url>http://code.google.com/p/todomap/source/browse/#svn/geocoder/trunk</url>
+  </scm>
   <build>
   	<plugins>
   		<plugin>
@@ -44,4 +64,21 @@
   		</plugin>
   	</plugins>
   </build>
+  <distributionManagement>
+  	<repository>
+  		<id>todomap.org</id>
+  		<name>todomap.org maven repository - releases</name>
+  		<url>scp://todomap.org:/var/www/mavenrepo/</url>
+  	</repository>
+  	<snapshotRepository>
+  		<id>todomap.org</id>
+  		<name>todomap.org maven repository - releases</name>
+  		<url>scp://todomap.org:/var/www/mavenrepo/</url>
+  	</snapshotRepository>
+  	<site>
+  		<id>todomap.org</id>
+  		<name>todomap.org maven sites place</name>
+  		<url>scp:todomap.org:/var/www/mavensites/</url>
+  	</site>
+  </distributionManagement>
 </project>
