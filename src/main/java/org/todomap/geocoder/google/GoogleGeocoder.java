@@ -2,7 +2,6 @@ package org.todomap.geocoder.google;
 
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Stack;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -11,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.todomap.geocoder.Address;
 import org.todomap.geocoder.GeoCoder;
 import org.todomap.geocoder.LatLng;
+import org.todomap.geocoder.util.Stack;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -61,7 +61,9 @@ public class GoogleGeocoder implements GeoCoder {
 				@Override
 				public void endElement(String uri, String localName,
 						String qName) throws SAXException {
-					elementNameStack.pop();
+					if(!elementNameStack.isEmpty()) {
+						elementNameStack.pop();
+					}
 				}
 
 				@Override
