@@ -8,6 +8,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.log4j.Logger;
 import org.todomap.geocoder.Address;
+import org.todomap.geocoder.GeoCodeException;
 import org.todomap.geocoder.GeoCoder;
 import org.todomap.geocoder.LatLng;
 import org.todomap.geocoder.util.Stack;
@@ -21,11 +22,11 @@ public class GoogleGeocoder implements GeoCoder {
 
 	private final static Logger logger = Logger.getLogger(GoogleGeocoder.class);
 
-	public LatLng geocode(final Address address) {
+	public LatLng geocode(final Address address) throws GeoCodeException {
 		return null;
 	}
 
-	public Address revert(final LatLng loc) {
+	public Address revert(final LatLng loc) throws GeoCodeException {
 		final Address addr = new Address();
 
 		try {

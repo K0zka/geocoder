@@ -4,11 +4,12 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 import org.todomap.geocoder.Address;
+import org.todomap.geocoder.GeoCodeException;
 import org.todomap.geocoder.LatLng;
 
 public class GoogleGeocoderTest {
 	@Test
-	public void testGeocode() {
+	public void testGeocode() throws GeoCodeException {
 		GoogleGeocoder geocoder = createGeoCoder();
 
 		Address address = new Address();
@@ -18,7 +19,7 @@ public class GoogleGeocoderTest {
 	}
 
 	@Test
-	public void testRevert() {
+	public void testRevert() throws GeoCodeException {
 		GoogleGeocoder geocoder = createGeoCoder();
 		
 		LatLng loc = new LatLng();
