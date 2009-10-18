@@ -18,79 +18,124 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class GoogleGeocoder implements GeoCoder {
 
-	String apiKey = null;
+	abstract class EventHandler extends DefaultHandler {
+		String elementName = null;
+		final Stack<String> elementNameStack = new Stack<String>();
+		String status = null;
+
+		@Override
+		public final void characters(final char[] ch, final int start,
+				final int length) throws SAXException {
+			final String characterData = new String(ch, start, length).trim();
+			logger.debug(elementName + " -> " + characterData);
+			if (characterData.length() > 0) {
+
+				if ("code".equals(elementName)) {
+					status = characterData;
+				}
+
+				characters(characterData);
+			}
+		}
+
+		abstract void characters(String characterData);
+
+		@Override
+		public final void endElement(final String uri, final String localName,
+				final String qName) throws SAXException {
+			if (!elementNameStack.isEmpty()) {
+				elementNameStack.pop();
+			}
+		}
+
+		@Override
+		public final void startElement(final String uri,
+				final String localName, final String qName,
+				final Attributes attributes) throws SAXException {
+			if (elementName != null) {
+				elementNameStack.push(elementName);
+			}
+			elementName = qName;
+		}
+	}
 
 	private final static Logger logger = Logger.getLogger(GoogleGeocoder.class);
 
+	String apiKey = null;
+
 	public LatLng geocode(final Address address) throws GeoCodeException {
-		return null;
-	}
+		final LatLng latLng = new LatLng();
 
-	public Address revert(final LatLng loc) throws GeoCodeException {
-		final Address addr = new Address();
-
-		try {
-			final URL reqURL = new URL(
-					"http://maps.google.com/maps/geo?output=xml&oe=utf-8&ll="
-							+ loc.getLat() + "%2C" + loc.getLng() + "&key="
-							+ apiKey);
-			final InputStream stream = reqURL.openStream();
-
-			final SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
-			final DefaultHandler hb = new DefaultHandler() {
-
-				final Stack<String> elementNameStack = new Stack<String>();
-				String elementName = null;
-				
-				@Override
-				public void characters(char[] ch, int start, int length)
-						throws SAXException {
-					final String characterData = new String(ch, start, length);
-					if(characterData.trim().length() > 0) {
-						if("CountryNameCode".equals(elementName)) {
-							addr.setCountry(characterData);
-						} else if("LocalityName".equals(elementName)) {
-							addr.setTown(characterData);
-						} else if("ThoroughfareName".equals(elementName)) {
-							addr.setAddress(characterData);
-						} else if("AdministrativeAreaName".equals(elementName)) {
-							addr.setState(characterData);
-						}
-					}
+		final EventHandler handler = new EventHandler() {
+			@Override
+			public void characters(final String characterData) {
+				if ("coordinates".equals(elementName)) {
+					final String[] split = characterData.split(",");
+					latLng.setLat(Double.parseDouble(split[0]));
+					latLng.setLng(Double.parseDouble(split[1]));
 				}
+			}
+		};
 
-				@Override
-				public void endElement(String uri, String localName,
-						String qName) throws SAXException {
-					if(!elementNameStack.isEmpty()) {
-						elementNameStack.pop();
-					}
-				}
+		parse(handler, "http://maps.google.com/maps/geo?q="
+				+ address.getCountry() + "+" + address.getCountry()
+				+ "&output=xml&oe=utf8&sensor=false&key=" + apiKey);
 
-				@Override
-				public void startElement(String uri, String localName,
-						String qName, Attributes attributes)
-						throws SAXException {
-					if(elementName != null) {
-						elementNameStack.push(elementName);
-					}
-					elementName = qName;
-				}
-			};
-			parser.parse(stream, hb);
-		} catch (Exception e) {
-			logger.error("Exception on resolving the locale", e);
-			throw new GeoCodeException(e);
-		}
-
-		return addr;
+		return latLng;
 	}
 
 	public String getApiKey() {
 		return apiKey;
 	}
 
-	public void setApiKey(String apiKey) {
+	private void parse(final EventHandler handler, final String reqURL)
+			throws GeoCodeException {
+		try {
+			final InputStream stream = new URL(reqURL).openStream();
+
+			final SAXParser parser = SAXParserFactory.newInstance()
+					.newSAXParser();
+			parser.parse(stream, handler);
+			stream.close();
+		} catch (final Exception e) {
+			throw new GeoCodeException(e);
+		}
+		if (!"200".equals(handler.status)) {
+			throw new GeoCodeException("Geocoder service returned status "
+					+ handler.status);
+		}
+	}
+
+	public Address revert(final LatLng loc) throws GeoCodeException {
+		final Address addr = new Address();
+
+		final EventHandler handler = new EventHandler() {
+
+			@Override
+			public void characters(final String characterData) {
+				if ("CountryNameCode".equals(elementName)) {
+					addr.setCountry(characterData);
+				} else if ("LocalityName".equals(elementName)) {
+					addr.setTown(characterData);
+				} else if ("ThoroughfareName".equals(elementName)) {
+					addr.setAddress(characterData);
+				} else if ("AdministrativeAreaName".equals(elementName)) {
+					addr.setState(characterData);
+				} else if ("status".equals(elementName)) {
+
+				}
+			}
+
+		};
+		parse(handler,
+				"http://maps.google.com/maps/geo?output=xml&oe=utf-8&ll="
+						+ loc.getLat() + "%2C" + loc.getLng() + "&key="
+						+ apiKey);
+
+		return addr;
+	}
+
+	public void setApiKey(final String apiKey) {
 		this.apiKey = apiKey;
 	}
 

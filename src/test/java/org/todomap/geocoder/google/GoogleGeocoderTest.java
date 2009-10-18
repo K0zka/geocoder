@@ -15,20 +15,30 @@ public class GoogleGeocoderTest {
 		Address address = new Address();
 		address.setCountry("Hungary");
 		address.setTown("Budapest");
-		geocoder.geocode(address);
+		LatLng latLng = geocoder.geocode(address);
+		Assert.assertNotNull(latLng);
+		Assert.assertFalse(latLng.getLat() == 0);
+		Assert.assertFalse(latLng.getLng() == 0);
 	}
 
 	@Test
 	public void testRevert() throws GeoCodeException {
 		GoogleGeocoder geocoder = createGeoCoder();
 		
-		LatLng loc = new LatLng();
-		loc.setLat(47.48135407127781);
-		loc.setLng(19.05265885162353);
+		LatLng loc = new LatLng(47.48135407127781, 19.05265885162353);
 		Address revert = geocoder.revert(loc);
 		
 		Assert.assertEquals("Budapest", revert.getTown());
 		Assert.assertEquals("HU", revert.getCountry());
+	}
+	
+	@Test(expected=GeoCodeException.class)
+	public void testRevert_badSetup() throws GeoCodeException {
+		final GoogleGeocoder geocoder = createGeoCoder();
+		geocoder.setApiKey("I-DO-NOT-HAVE-A-KEY-SO-WHAT-NOW");
+		
+		LatLng loc = new LatLng(47.48135407127781, 19.05265885162353);
+		geocoder.revert(loc);
 	}
 	
 	private GoogleGeocoder createGeoCoder() {

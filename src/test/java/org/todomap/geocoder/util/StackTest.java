@@ -21,9 +21,9 @@ public class StackTest {
 	public void testBehavior() {
 		Stack<String> stack = new Stack<String>();
 		Assert.assertTrue(stack.isEmpty());
-		stack.add("1");
+		stack.push("1");
 		Assert.assertEquals("1", stack.peek());
-		stack.add("2");
+		stack.push("2");
 		Assert.assertEquals("2", stack.peek());
 		Assert.assertEquals("2", stack.pop());
 		Assert.assertEquals("1", stack.peek());
