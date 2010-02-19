@@ -18,10 +18,11 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class GoogleGeocoder implements GeoCoder {
 
+	private String elementName = null;
+
 	abstract class EventHandler extends DefaultHandler {
-		String elementName = null;
-		final Stack<String> elementNameStack = new Stack<String>();
-		String status = null;
+		private final Stack<String> elementNameStack = new Stack<String>();
+		private String status = null;
 
 		@Override
 		public final void characters(final char[] ch, final int start,
@@ -61,7 +62,7 @@ public class GoogleGeocoder implements GeoCoder {
 
 	private final static Logger logger = Logger.getLogger(GoogleGeocoder.class);
 
-	String apiKey = null;
+	private String apiKey = null;
 
 	public LatLng geocode(final Address address) throws GeoCodeException {
 		final LatLng latLng = new LatLng();
