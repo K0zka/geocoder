@@ -8,15 +8,15 @@ public class GeoCodeException extends Exception {
 		super();
 	}
 
-	public GeoCodeException(String message, Throwable cause) {
-		super(message, cause);
-	}
-
-	public GeoCodeException(String message) {
+	public GeoCodeException(final String message) {
 		super(message);
 	}
 
-	public GeoCodeException(Throwable cause) {
+	public GeoCodeException(final String message, final Throwable cause) {
+		super(message, cause);
+	}
+
+	public GeoCodeException(final Throwable cause) {
 		super(cause);
 	}
 

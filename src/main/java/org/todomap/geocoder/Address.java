@@ -4,32 +4,40 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class Address {
-	String country;
-	String state;
-	String town;
-	String address;
-	public String getCountry() {
-		return country;
-	}
-	public void setCountry(String country) {
-		this.country = country;
-	}
-	public String getState() {
-		return state;
-	}
-	public void setState(String state) {
-		this.state = state;
-	}
-	public String getTown() {
-		return town;
-	}
-	public void setTown(String town) {
-		this.town = town;
-	}
+	private String address;
+	private String country;
+	private String state;
+	private String town;
+
 	public String getAddress() {
 		return address;
 	}
-	public void setAddress(String address) {
+
+	public String getCountry() {
+		return country;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public String getTown() {
+		return town;
+	}
+
+	public void setAddress(final String address) {
 		this.address = address;
+	}
+
+	public void setCountry(final String country) {
+		this.country = country;
+	}
+
+	public void setState(final String state) {
+		this.state = state;
+	}
+
+	public void setTown(final String town) {
+		this.town = town;
 	}
 }
