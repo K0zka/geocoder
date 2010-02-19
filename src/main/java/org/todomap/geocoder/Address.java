@@ -18,14 +18,26 @@ public class Address {
 		return address;
 	}
 
+	/**
+	 * Country.
+	 * @return
+	 */
 	public String getCountry() {
 		return country;
 	}
 
+	/**
+	 * State, or county in not state-federation countries.
+	 * @return
+	 */
 	public String getState() {
 		return state;
 	}
 
+	/**
+	 * The name of the town.
+	 * @return
+	 */
 	public String getTown() {
 		return town;
 	}

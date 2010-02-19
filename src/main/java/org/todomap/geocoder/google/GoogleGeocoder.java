@@ -26,10 +26,13 @@ public class GoogleGeocoder implements GeoCoder {
 
 	private String elementName = null;
 
-	abstract class EventHandler extends DefaultHandler {
+	private abstract class EventHandler extends DefaultHandler {
 		private final Stack<String> elementNameStack = new Stack<String>();
 		private String status = null;
 
+		/**
+		 * {@inheritDoc}
+		 */
 		@Override
 		public final void characters(final char[] ch, final int start,
 				final int length) throws SAXException {
@@ -47,6 +50,9 @@ public class GoogleGeocoder implements GeoCoder {
 
 		abstract void characters(String characterData);
 
+		/**
+		 * {@inheritDoc}
+		 */
 		@Override
 		public final void endElement(final String uri, final String localName,
 				final String qName) throws SAXException {
@@ -55,6 +61,9 @@ public class GoogleGeocoder implements GeoCoder {
 			}
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
 		@Override
 		public final void startElement(final String uri,
 				final String localName, final String qName,
@@ -70,6 +79,9 @@ public class GoogleGeocoder implements GeoCoder {
 
 	private String apiKey = null;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public LatLng geocode(final Address address) throws GeoCodeException {
 		final LatLng latLng = new LatLng();
 
