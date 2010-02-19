@@ -4,6 +4,11 @@ import java.io.Serializable;
 
 import javax.persistence.Embeddable;
 
+/**
+ * Latitude and longitude.
+ * 
+ * @author kocka
+ */
 @Embeddable
 public class LatLng implements Serializable {
 	/**

@@ -2,6 +2,11 @@ package org.todomap.geocoder;
 
 import javax.persistence.Embeddable;
 
+/**
+ * Address bean.
+ * @author kocka
+ *
+ */
 @Embeddable
 public class Address {
 	private String address;

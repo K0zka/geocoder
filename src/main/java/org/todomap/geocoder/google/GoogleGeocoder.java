@@ -16,6 +16,12 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+/**
+ * Google geocoder implementation.
+ * 
+ * @author kocka
+ *
+ */
 public class GoogleGeocoder implements GeoCoder {
 
 	private String elementName = null;
