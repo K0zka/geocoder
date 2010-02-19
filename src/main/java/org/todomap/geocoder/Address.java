@@ -4,8 +4,9 @@ import javax.persistence.Embeddable;
 
 /**
  * Address bean.
+ * 
  * @author kocka
- *
+ * 
  */
 @Embeddable
 public class Address {
@@ -20,6 +21,7 @@ public class Address {
 
 	/**
 	 * Country.
+	 * 
 	 * @return
 	 */
 	public String getCountry() {
@@ -28,6 +30,7 @@ public class Address {
 
 	/**
 	 * State, or county in not state-federation countries.
+	 * 
 	 * @return
 	 */
 	public String getState() {
@@ -36,6 +39,7 @@ public class Address {
 
 	/**
 	 * The name of the town.
+	 * 
 	 * @return
 	 */
 	public String getTown() {

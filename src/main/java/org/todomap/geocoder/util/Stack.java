@@ -35,6 +35,7 @@ public final class Stack<E> extends ArrayList<E> {
 
 	/**
 	 * Return and remove the top element.
+	 * 
 	 * @return
 	 */
 	public E pop() {
@@ -44,6 +45,7 @@ public final class Stack<E> extends ArrayList<E> {
 
 	/**
 	 * Push a new element into the stack.
+	 * 
 	 * @param element
 	 */
 	public void push(final E element) {

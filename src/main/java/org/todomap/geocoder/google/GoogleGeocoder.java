@@ -1,8 +1,10 @@
 package org.todomap.geocoder.google;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -20,11 +22,9 @@ import org.xml.sax.helpers.DefaultHandler;
  * Google geocoder implementation.
  * 
  * @author kocka
- *
+ * 
  */
 public class GoogleGeocoder implements GeoCoder {
-
-	private String elementName = null;
 
 	private abstract class EventHandler extends DefaultHandler {
 		private final Stack<String> elementNameStack = new Stack<String>();
@@ -77,7 +77,12 @@ public class GoogleGeocoder implements GeoCoder {
 
 	private final static Logger logger = Logger.getLogger(GoogleGeocoder.class);
 
+	final static SAXParserFactory parserFactory = SAXParserFactory
+			.newInstance();
+
 	private String apiKey = null;
+
+	private String elementName = null;
 
 	/**
 	 * {@inheritDoc}
@@ -112,11 +117,14 @@ public class GoogleGeocoder implements GeoCoder {
 		try {
 			final InputStream stream = new URL(reqURL).openStream();
 
-			final SAXParser parser = SAXParserFactory.newInstance()
-					.newSAXParser();
+			final SAXParser parser = parserFactory.newSAXParser();
 			parser.parse(stream, handler);
 			stream.close();
-		} catch (final Exception e) {
+		} catch (final IOException e) {
+			throw new GeoCodeException(e);
+		} catch (final SAXException e) {
+			throw new GeoCodeException(e);
+		} catch (final ParserConfigurationException e) {
 			throw new GeoCodeException(e);
 		}
 		if (!"200".equals(handler.status)) {
