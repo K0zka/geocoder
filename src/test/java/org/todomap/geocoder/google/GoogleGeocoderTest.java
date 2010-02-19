@@ -32,15 +32,6 @@ public class GoogleGeocoderTest {
 		Assert.assertEquals("HU", revert.getCountry());
 	}
 	
-	@Test(expected=GeoCodeException.class)
-	public void testRevert_badSetup() throws GeoCodeException {
-		final GoogleGeocoder geocoder = createGeoCoder();
-		geocoder.setApiKey("I-DO-NOT-HAVE-A-KEY-SO-WHAT-NOW");
-		
-		LatLng loc = new LatLng(47.48135407127781, 19.05265885162353);
-		geocoder.revert(loc);
-	}
-	
 	private GoogleGeocoder createGeoCoder() {
 		GoogleGeocoder geocoder = new GoogleGeocoder();
 		geocoder.setApiKey("ABQIAAAAzr2EBOXUKnm_jVnk0OJI7xSosDVG8KKPE1-m51RBrvYughuyMxQ-i1QfUnH94QxWIa6N4U6MouMmBA");
