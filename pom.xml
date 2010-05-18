@@ -3,7 +3,7 @@
 	<groupId>org.todomap</groupId>
 	<artifactId>geocoder</artifactId>
 	<name>geocoder api</name>
-	<version>0.0.3</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<description>Google and Yahoo Geocoder wrappers for Java</description>
 	<repositories>
 		<repository>
@@ -53,9 +53,9 @@
 		</developer>
 	</developers>
 	<scm>
-		<connection>scm:svn:http://todomap.googlecode.com/svn/geocoder/tags/geocoder-0.0.3</connection>
-		<developerConnection>scm:svn:https://todomap.googlecode.com/svn/geocoder/tags/geocoder-0.0.3</developerConnection>
-		<url>http://code.google.com/p/todomap/source/browse/#svn/geocoder/tags/geocoder-0.0.3</url>
+		<connection>scm:svn:http://todomap.googlecode.com/svn/geocoder/trunk/</connection>
+		<developerConnection>scm:svn:https://todomap.googlecode.com/svn/geocoder/trunk/</developerConnection>
+		<url>http://code.google.com/p/todomap/source/browse/#svn/geocoder/trunk</url>
 	</scm>
 	<build>
 		<plugins>
