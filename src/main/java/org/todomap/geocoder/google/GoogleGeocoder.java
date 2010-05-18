@@ -148,6 +148,8 @@ public class GoogleGeocoder implements GeoCoder {
 					addr.setAddress(characterData);
 				} else if ("AdministrativeAreaName".equals(elementName)) {
 					addr.setState(characterData);
+				} else if("PostalCodeNumber".equals(elementName)) {
+					addr.setPostalCode(characterData);
 				}
 			}
 
